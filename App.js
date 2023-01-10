@@ -1,6 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import img from './assets/telaviv.webp';
 
 import axios from 'axios';
 import { API_KEY } from './utils/APIKey';
@@ -9,6 +10,8 @@ import CurrentWeather from './components/CurrentWeather.js';
 export default function App() {
 
   const [weather, setWeather] = React.useState(null);
+
+  const [bg, setBg] = React.useState("./assets/telaviv.webp");
 
   const fetchWeather = (city) => {
     fetch(
@@ -35,8 +38,10 @@ export default function App() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      {weather ? <CurrentWeather weather={weather} /> : <Text>'Loading...'</Text>}
+    <View style={styles.container}> 
+      <ImageBackground source={img} resizeMode="cover" style={styles.image}>
+        {weather ? <CurrentWeather weather={weather} /> : <Text>'Loading...'</Text>}
+      </ImageBackground>
     </View>
   );
 }
@@ -44,8 +49,13 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    width: "100%",
     alignItems: 'center',
     justifyContent: 'center',
   },
+  image: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center"
+  }
 });
